@@ -30,7 +30,7 @@ export const FilterInput = () => {
   }
 
   return (
-    <Box component="form">
+    <Box component="div">
       <TextField
         size={'small'}
         type="number"
