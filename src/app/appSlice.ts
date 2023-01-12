@@ -24,7 +24,7 @@ export const slice = createSlice({
       state.total = action.payload.total
       state.per_page = action.payload.per_page
     },
-    setFilterAC: (state, action: PayloadAction<{ filter: FilterType }>) => {
+    setFilterAC: (state, action: PayloadAction<{ filter: number | null }>) => {
       state.filter = action.payload.filter
     },
     setInitializedAC: (state, action: PayloadAction<{ isInitialized: IsInitializedType }>) => {
@@ -73,7 +73,7 @@ export const getProductsFromPage = (pageNumber: number) => async (dispatch: Disp
 
 export type IsInitializedType = 'loading' | 'idle' | 'failed'
 
-type InitialStateType = {
+export type InitialStateType = {
   products: ProductType[]
   filter: number | null
   page: number
@@ -82,8 +82,6 @@ type InitialStateType = {
   per_page: number
   isInitialized: IsInitializedType
 }
-
-type FilterType = number | null
 
 type SetProductsType = Omit<InitialStateType, 'filter' | 'isInitialized'>
 

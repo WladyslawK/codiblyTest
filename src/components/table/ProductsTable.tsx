@@ -101,10 +101,6 @@ export default function ProductsTable() {
         </div>
 
       </div>
-
-      <div className={s.ElementContainer}>
-
-      </div>
       <div className={s.ElementContainer}>
         {isInitialized === 'loading' ? '' : <CustomPagination/>}
       </div>
