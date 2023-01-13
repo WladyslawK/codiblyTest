@@ -1,6 +1,7 @@
 import {createSlice, Dispatch, PayloadAction} from '@reduxjs/toolkit'
 
 import {productsApi, ProductType} from '../services/products-api'
+import {errorHandle} from "../utils/error-handling";
 
 const initialState: InitialStateType = {
   products: [],
@@ -10,6 +11,7 @@ const initialState: InitialStateType = {
   total: 0,
   per_page: 0,
   isInitialized: 'loading',
+  error: null
 
 }
 
@@ -33,12 +35,15 @@ export const slice = createSlice({
     setProductsPerPage: (state, action: PayloadAction<ProductsPerPageType>) => {
       state.products = action.payload.products
       state.page = action.payload.page
+    },
+    setAppErrorAC: (state, action: PayloadAction<{error: string | null}>) => {
+      state.error = action.payload.error
     }
   },
 })
 
 export const appSlice = slice.reducer
-export const {setProductsAC, setFilterAC, setInitializedAC, setProductsPerPage} = slice.actions
+export const {setProductsAC, setFilterAC, setInitializedAC, setProductsPerPage, setAppErrorAC} = slice.actions
 
 
 //thunks
@@ -51,8 +56,8 @@ export const getProducts = () => async (dispatch: Dispatch) => {
 
     dispatch(setProductsAC({products: response.data.data, page, total_pages, total, per_page}))
     dispatch(setInitializedAC({isInitialized: 'idle'}))
-  } catch (e) {
-    console.log(e)
+  } catch (e: any) {
+    errorHandle(dispatch, e.message)
   }
 }
 
@@ -66,8 +71,8 @@ export const getProductsFromPage = (pageNumber: number) => async (dispatch: Disp
     dispatch(setProductsAC({products: response.data.data, page, total_pages, total, per_page}))
     dispatch(setInitializedAC({isInitialized: 'idle'}))
 
-  }catch (e){
-    console.log(e)
+  }catch (e: any){
+    errorHandle(dispatch, e.message)
   }
 }
 
@@ -81,8 +86,9 @@ export type InitialStateType = {
   total: number
   per_page: number
   isInitialized: IsInitializedType
+  error: string | null
 }
 
-type SetProductsType = Omit<InitialStateType, 'filter' | 'isInitialized'>
+type SetProductsType = Omit<InitialStateType, 'filter' | 'isInitialized' | 'error'>
 
 type ProductsPerPageType = Pick<InitialStateType, 'products' | 'page'>

@@ -1,6 +1,6 @@
 import {
   appSlice,
-  InitialStateType,
+  InitialStateType, setAppErrorAC,
   setFilterAC,
   setInitializedAC,
   setProductsAC, setProductsPerPage
@@ -18,6 +18,7 @@ describe('auth reducer tests', () => {
       total: 0,
       per_page: 0,
       isInitialized: 'loading',
+      error: null
     }
   })
 
@@ -68,10 +69,17 @@ describe('auth reducer tests', () => {
         color: 'yellow',
         pantone_value: 'string'
       }],
-      page: 1,
+      page: 2,
     }
     const state = appSlice(initialState, setProductsPerPage(data))
     expect(state.page).toBe(2)
+  })
+
+  test('set error to bad request', () => {
+
+    const state = appSlice(initialState, setAppErrorAC({error: 'bad request'}))
+    expect(state.error).toBe('bad request')
+
   })
 
 
