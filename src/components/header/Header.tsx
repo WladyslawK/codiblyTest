@@ -7,8 +7,12 @@ import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
+import {useAppSelector} from "../../hooks/reduxHooks";
+import {LinearProgress} from "@mui/material";
 
 export const Header = () => {
+    const isInitialized = useAppSelector(state => state.appProducts.isInitialized)
+
     return (
         <Box sx={{flexGrow: 1}}>
             <AppBar position="static">
@@ -22,6 +26,7 @@ export const Header = () => {
                     <Button color="inherit">Login</Button>
                 </Toolbar>
             </AppBar>
+            {isInitialized === 'loading' ? <LinearProgress /> : ''}
         </Box>
     )
 }
