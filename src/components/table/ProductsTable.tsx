@@ -21,7 +21,7 @@ import {TableBodySkeleton} from "../skeletonTable/SkeletonTable";
 
 export default function ProductsTable() {
   const [openModal, setOpenModal] = useState(false)
-  const [modalData, setModalData] = useState<Omit<ModalProductDataType, 'closeModal'>>({id: 0, name: '', color: ''})
+  const [modalData, setModalData] = useState<Omit<ModalProductDataType, 'closeModal'>>({id: 0, name: '', color: '', year: 0})
   const products = useAppSelector<ProductType[]>(state => state.appProducts.products)
   const filter = useAppSelector(state => state.appProducts.filter)
   const rows = useAppSelector(state => state.appProducts.per_page)
@@ -50,7 +50,7 @@ export default function ProductsTable() {
 
   const modal = openModal ?
     <CustomModalDialog closeModal={setOpenModal} open={openModal}>
-      <ModalProductData id={modalData.id} color={modalData.color} name={modalData.name} closeModal={handleCloseModal}/>
+      <ModalProductData id={modalData.id} color={modalData.color} name={modalData.name} year={modalData.year} closeModal={handleCloseModal}/>
     </CustomModalDialog> : ''
 
   return (
@@ -84,7 +84,8 @@ export default function ProductsTable() {
                               onClick={() => handleOpenModal({
                                 id: product.id,
                                 name: product.name,
-                                color: product.color
+                                color: product.color,
+                                year: product.year
                               })}
                     >
                       <TableCell component="th" scope="row">

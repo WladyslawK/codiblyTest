@@ -6,11 +6,12 @@ export type ModalProductDataType = {
   id: number
   name: string
   color: string
+  year: number
   closeModal: () => void
 }
 
 
-export const ModalProductData: React.FC<ModalProductDataType> = memo(({id, color, name, closeModal}) => {
+export const ModalProductData: React.FC<ModalProductDataType> = memo(({id, color, name, year, closeModal}) => {
   return (
     <div className={s.mainContainer}>
       <div className={s.AlignContainer}>
@@ -19,7 +20,8 @@ export const ModalProductData: React.FC<ModalProductDataType> = memo(({id, color
       <div className={s.ProductContainer}>
         <section className={s.AboutProductSection}>
           <p><b>id</b>: {id}</p>
-          <p><b>name</b>: {id}</p>
+          <p><b>name</b>: {name}</p>
+          <p><b>year</b>: {year}</p>
         </section>
         <div style={{backgroundColor: color}} className={s.ColorContainer}>
         </div>
